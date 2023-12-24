@@ -1,10 +1,10 @@
 package com.music.coinswap.data.remote.DTO
 
 data class CurrencyDtO(
-    val data: CurrencyDto
+    val data: CurrencyDataDto
 )
 
-data class CurrencyDto(
+data class CurrencyDataDto(
     val AUD: Double,
     val BGN: Double,
     val BRL: Double,
