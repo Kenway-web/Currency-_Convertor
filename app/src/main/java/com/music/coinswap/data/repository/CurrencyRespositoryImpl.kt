@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
 
-class CurrencyRespositoryImpl(
+class CurrencyRepositoryImpl(
     private val api:CurrencyApi,
     private val dao:CurrencyRateDao
 ):CurrencyRepository {

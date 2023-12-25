@@ -7,11 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.music.coinswap.domain.model.Resource
 import com.music.coinswap.domain.repository.CurrencyRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
+import javax.inject.Inject
 
-class MainScreenViewModel(
+
+@HiltViewModel
+class MainScreenViewModel @Inject constructor(
 private val repository: CurrencyRepository
 ):ViewModel() {
 
