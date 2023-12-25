@@ -39,7 +39,10 @@ import com.music.coinswap.R
 
 
 @Composable
-fun MainScreen()
+fun MainScreen(
+    state: MainScreenState,
+    onEvent: (MainScreenEvent) -> Unit
+)
 {
 
     val keys = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", ".", "0", "C")
@@ -77,14 +80,17 @@ fun MainScreen()
 
                            CurrencyRow(
                                modifier = Modifier.fillMaxWidth(),
-                               currencyCode = "INR",
-                               currencyName = "Indian Rupees",
+                               currencyCode = state.fromCurrencyCode,
+                               currencyName = state.currencyRates[state.toCurrencyCode]?.name?:"",
                                onDropDownIconClicked = {}
                            )
 
                            Text(
-                               text = "80.23",
-                               fontSize = 40.sp
+                               text = state.fromCurrencyValue,
+                               fontSize = 40.sp,
+                               modifier = Modifier.clickable {
+                                   onEvent(MainScreenEvent.FromCurrencySelect)
+                               }
                            )
                        }
                    }
@@ -101,15 +107,20 @@ fun MainScreen()
                        )
                        {
                            Text(
-                               text = "80.23",
-                               fontSize = 40.sp
+                               text = state.toCurrencyValue,
+                               fontSize = 40.sp,
+                               modifier = Modifier.clickable {
+                                   onEvent(MainScreenEvent.ToCurrencySelect)
+                               }
                            )
 
                            CurrencyRow(
                                modifier = Modifier.fillMaxWidth(),
-                               currencyCode = "INR",
-                               currencyName = "Indian Rupees",
-                               onDropDownIconClicked = {}
+                               currencyCode = state.fromCurrencyCode,
+                               currencyName = state.currencyRates[state.fromCurrencyCode]?.name?:"",
+                               onDropDownIconClicked = {
+
+                               }
                            )
 
 
@@ -122,7 +133,7 @@ fun MainScreen()
                    modifier = Modifier
                        .padding(start = 40.dp)
                        .clip(CircleShape)
-                       .clickable { }
+                       .clickable { onEvent(MainScreenEvent.SwapIconClicked)}
                        .background(color = MaterialTheme.colorScheme.background)
                ) {
                    Icon(
@@ -148,6 +159,7 @@ fun MainScreen()
                        backgroundColor = if (key == "C") MaterialTheme.colorScheme.primary
                        else MaterialTheme.colorScheme.surfaceVariant,
                        onClick = {
+                           onEvent(MainScreenEvent.NumberButtonClicked(key))
                        }
                    )
                }
